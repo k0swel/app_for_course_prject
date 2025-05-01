@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>window_query</class>
+ <widget class="QWidget" name="window_query">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>779</width>
+    <height>406</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(97, 97, 97);
+color: black;</string>
+  </property>
+  <widget class="QWidget" name="widget_header" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>781</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget#widget_header {
+	background-color: rgb(115, 115, 115)
+}</string>
+   </property>
+   <widget class="QToolButton" name="toolButton_hide">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>10</y>
+      <width>23</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::ListRemove"/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_close">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>10</y>
+      <width>23</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+    <property name="icon">
+     <iconset theme="application-exit"/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="label_main_text">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>731</width>
+     <height>69</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel#label_main_text {
+        font-size: 25px;
+        border: 3px solid rgb(179, 0, 0);
+        border-radius: 15px;
+        background-color: rgb(171, 171, 171);
+		color:black;
+}
+
+QLabel#label_main_text::hover {
+        background-color: rgb(223, 223, 223);
+}</string>
+   </property>
+   <property name="text">
+    <string>SQL - Execute</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>140</y>
+     <width>651</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: white;</string>
+   </property>
+   <property name="title">
+    <string>Опции SQL - запроса</string>
+   </property>
+   <widget class="QPushButton" name="pushButton_send_query">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>160</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton#pushButton_send_query {
+	background-color: rgb(159, 255, 152);
+	color: black;
+}</string>
+    </property>
+    <property name="text">
+     <string>Отправить</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="lineEdit_query">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>20</y>
+      <width>371</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPlainTextEdit#lineEdit_query {
+color: black;
+border-radius: 20px;
+background-color: white;
+padding: 20px;
+}
+
+QPlainTextEdit#lineEdit_query:hover {
+	border: 3px solid green;
+}</string>
+    </property>
+    <property name="placeholderText">
+     <string>Введите ваш SQL-запрос.</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>201</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Выберите тип запроса</string>
+    </property>
+    <widget class="QRadioButton" name="radioButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Запрос данных</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Манипулирование данными</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

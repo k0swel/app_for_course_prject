@@ -1,0 +1,6 @@
+build/*
+!*.dll
+.qt
+Makefile
+application.pro.user
+.qmake.stash
