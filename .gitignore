@@ -4,3 +4,4 @@ build/*
 Makefile
 application.pro.user
 .qmake.stash
+
