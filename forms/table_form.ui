@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
-    <height>443</height>
+    <width>578</width>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,13 @@ QTableView#tableView_from_database::item {
 	background-color: white;
 }
 
+QTableView::item:selected {
+	background-color: white;
+	color: black;
+}
+
+QTableView#table_from_database
+
 QTableView#tableView_from_database:hover {
 	border: 1px solid rgb(0, 255, 0);
 }</string>
@@ -47,7 +54,7 @@ QTableView#tableView_from_database:hover {
      <x>0</x>
      <y>0</y>
      <width>581</width>
-     <height>45</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -124,6 +131,11 @@ QLabel#label_main_text::hover {
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>tableView_from_database</tabstop>
+  <tabstop>toolButton_hide</tabstop>
+  <tabstop>toolButton_close</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

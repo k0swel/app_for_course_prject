@@ -1,6 +1,7 @@
 #include "notification.h"
 #include "ui_notification.h"
 #include <QTimer>
+#include <QtConcurrent>
 
 notification* notification::instance = nullptr;
 
@@ -21,9 +22,10 @@ notification::notification(QString title, QString text, QWidget *parent) :
    this->setWindowFlags(Qt::FramelessWindowHint);
    this->setWindowTitle(title); // устанавливаем заголовок окна
    this->move(10,10); // передвигаем окно в начало рабочего стола.
-   ui->label->setText(text); // устанавливаем выбранный текст в уведомление
-   ui->label->setWordWrap(true); // делаем перенос qlabel на новую строку при необходимости.
-   ui->label->resize(ui->label->sizeHint()); // устанавливаем рекомендованный размер для label
+   ui->label_title->setText(title); // устанавливаем заголовок.
+   ui->label_text->setText(text); // устанавливаем выбранный текст в уведомление
+   ui->label_text->setWordWrap(true); // делаем перенос qlabel на новую строку при необходимости.
+   ui->label_text->resize(ui->label_text->sizeHint()); // устанавливаем рекомендованный размер для label
    this->show(); // отображаем уведомление
    this->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); // уничтожаем виджет при его закрытии.
    update_progress_bar(); // функция обновления прогресс бара.
@@ -44,7 +46,7 @@ void notification::update_progress_bar() {
          this->ui->progressBar->setValue(++this->current_value_progress_bar);
       else if (this->ui->progressBar->value() == 100) {
          timer->deleteLater(); // уничтожаем таймер
-         this->close_window(); // закрываем текущее окно
+         QtConcurrent::run([&]() -> void {this->close_window();}); // закрываем текущее окно)
       }
 
    });

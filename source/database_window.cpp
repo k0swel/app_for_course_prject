@@ -16,9 +16,8 @@ database_window::database_window(QWidget *parent) :
    this->setWindowFlag(Qt::WindowType::FramelessWindowHint);
    connect(this, &database_window::destroyed, this, &QObject::deleteLater); // при закрытии окна уничтожаем его объект.
    this->dms = new database; // инициализируем объект БД
-
-   std::filesystem::path path_to_json_file("./login_data.json");
    fill_input_fields();
+   this->show();
 }
 
 void database_window::mousePressEvent(QMouseEvent *event)  { // обработчик события фиксирования позиции мыши при нажатии
@@ -35,12 +34,7 @@ void database_window::mouseMoveEvent(QMouseEvent *event)  { // обработч�
     }
 }
 
-void database_window::closeEvent(QCloseEvent *event) // обработчик события закрытия окна
-{
-   event->ignore(); // игнорируем событие
-   exit(0); // закрываем программу
-}
-
+// заполнение полей ввода входа в бд данными из кэша
 void database_window::fill_input_fields()
 {
    std::filesystem::path path_to_json_file("./login_data.json");
@@ -81,6 +75,7 @@ database_window::~database_window()
 }
 
 
+// нажатие кнопки подключения к базе данных
 void database_window::on_pushButton_connect_clicked()
 {
    QString&& address = ui->lineEdit_ip_database->text(); // узнаём IP-адрес
@@ -91,6 +86,7 @@ void database_window::on_pushButton_connect_clicked()
    QString&& database_name = ui->lineEdit_database_name->text(); // узнаём имя базы данных
    if (dms->connect_to_database(address, database_name, port, username, password)) {
       window_query::create_instance(this->dms)->show(); // если подключение к БД успешно
+      this->close(); // закрываем текущее окно.
 
       if (ui->checkBox_remember_me->isChecked()) {
          if (!write_to_json(address, database_name, password, port, username)) // если данные от БД не записались в JSON

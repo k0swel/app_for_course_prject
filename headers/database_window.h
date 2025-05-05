@@ -42,12 +42,10 @@ private:
    void mouseMoveEvent(QMouseEvent* event) override; // обрабатываем событие перемещения мыши
 
    QPointF m_dragPosition;
-   // ОБРАБАТЫВАЕМ СОБЫТИЕ ЗАКРЫТИЯ ОКНА
-   void closeEvent(QCloseEvent* event) override; // обрабатываем событие, когда пользователь хочет закрыть окно
 
    database* dms; // объект базы данных
 
-   void fill_input_fields();
+   void fill_input_fields(); // заполнение полей ввода входа в бд данными из кэша
 };
 
 #endif // DATABASE_WINDOW_H

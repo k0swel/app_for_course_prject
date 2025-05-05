@@ -7,14 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>395</width>
-    <height>105</height>
+    <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(33, 35, 40);</string>
+   <string notr="true">background-color: rgb(33, 35, 40);
+QLabel::hover {
+	background-color: rgb(147, 147, 147);
+}</string>
   </property>
   <widget class="QPushButton" name="pushButton_close">
    <property name="geometry">
@@ -43,14 +46,14 @@ border: 1px solid red;
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>30</y>
+     <y>40</y>
      <width>361</width>
      <height>61</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_text">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
@@ -78,6 +81,33 @@ border: 1px solid red;
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_title">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>10</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+color: white;
+border: 2px solid white;
+border-radius: 5px;
+}
+
+QLabel::hover {
+	background-color: rgb(132, 132, 132);
+}</string>
+   </property>
+   <property name="text">
+    <string>Some title...</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>

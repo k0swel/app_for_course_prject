@@ -5,6 +5,7 @@
 #include <QSqlQueryModel>
 #include <table_form.h>
 #include "notification.h"
+#include "database_window.h"
 
 window_query* window_query::instance = nullptr;
 
@@ -55,6 +56,7 @@ void window_query::closeEvent(QCloseEvent *event) // обработчик соб
 {
    event->ignore(); // игнорируем дальнейшую обработку события.
    window_query::instance = nullptr; // обнуляем указатель на окно
+   new database_window(); // открываем главное окно.
    this->deleteLater(); // удаляем объект окна из памяти.
 }
 
@@ -78,16 +80,30 @@ void window_query::on_toolButton_hide_clicked()
 
 void window_query::on_pushButton_send_query_clicked() // нажата кнопка отправки запроса
 {
-   QSqlQueryModel* table_model = new QSqlQueryModel(this);
-   if (this->db->query.exec(ui->lineEdit_query->toPlainText())) {
-      qDebug() << "Запрос выполнен успешно!";
-      table_model->setQuery(std::move(this->db->query));
-      table_form* table_window = new table_form(table_model); // создаём окно с таблицей
-      table_window->show(); // показываем окно на экране.
-      qDebug() << "Количество колонок в модели: " << table_model->columnCount();
+   QSqlQueryModel* table_model = new QSqlQueryModel;
+   if (ui->radioButton_select->isChecked()) {
+      if (this->db->query.exec(ui->lineEdit_query->toPlainText())) {
+         qInfo() << "Запрос SELECT выполнен успешно!";
+         table_model->setQuery(this->db->query);
+         table_form* table_window = new table_form(table_model); // создаём окно с таблицей
+         table_window->show(); // показываем окно на экране.
+         qInfo() << "Количество колонок в модели: " << table_model->columnCount();
+      }
+      else {
+         notification::create_instance("Ошибка запроса", this->db->query.lastError().text()); // выводим уведомление об ошибке.
+      }
    }
-   else {
-      notification::create_instance("Ошибка запроса", this->db->query.lastError().text());
+   else if (ui->radioButton_other->isChecked()) {
+      if (ui->lineEdit_query->toPlainText().contains("select", Qt::CaseInsensitive))
+         notification::create_instance("Ошибка", "Вы ввели запрос на выборку данных с настройкой \"Манипулирование данными\"");
+      else {
+         if (this->db->query.exec(ui->lineEdit_query->toPlainText())) {
+            qInfo() << "Запрос OTHER выполнен успешно!";
+         }
+         else {
+            notification::create_instance("Ошибка запроса", this->db->query.lastError().text()); // выводим уведомление об ошибке
+         }
+      }
    }
 }
 

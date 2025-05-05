@@ -170,7 +170,7 @@ QPlainTextEdit#lineEdit_query:hover {
     <property name="title">
      <string>Выберите тип запроса</string>
     </property>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="radioButton_select">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -189,7 +189,7 @@ QPlainTextEdit#lineEdit_query:hover {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="radioButton_other">
      <property name="geometry">
       <rect>
        <x>10</x>
