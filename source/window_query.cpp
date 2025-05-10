@@ -6,6 +6,9 @@
 #include <table_form.h>
 #include "notification.h"
 #include "database_window.h"
+#include <chrono>
+#include <QSqlField>
+#include <QSqlResult>
 
 window_query* window_query::instance = nullptr;
 
@@ -54,10 +57,30 @@ void window_query::mouseMoveEvent(QMouseEvent *event)  { // обработчик
 
 void window_query::closeEvent(QCloseEvent *event) // обработчик события закрытия окна
 {
-   event->ignore(); // игнорируем дальнейшую обработку события.
    window_query::instance = nullptr; // обнуляем указатель на окно
    new database_window(); // открываем главное окно.
-   this->deleteLater(); // удаляем объект окна из памяти.
+   event->accept(); // закрываем окно
+}
+
+QString window_query::get_table_name(QString& query)
+{
+   QString table_name = NULL; // возвращаемая переменная
+   if (query.contains("FROM", Qt::CaseInsensitive)) {
+      QString query = ui->lineEdit_query->toPlainText();
+      QStringList words = query.split(' ', Qt::SkipEmptyParts);
+      if (query.split(' ').contains("FROM", Qt::CaseInsensitive)) {
+         for (int i = 0; i < words.count(); i++) {
+            if (words.at(i).toLower() == QString("from")) {
+               table_name = words[i+1];
+               if (table_name[table_name.size() - 1] == ';') {
+                  table_name.slice(0, table_name.size() - 1);
+               }
+               break;
+            }
+         }
+      }
+   }
+   return table_name; // возвращаем имя таблицы
 }
 
 
@@ -82,12 +105,24 @@ void window_query::on_pushButton_send_query_clicked() // нажата кнопк
 {
    QSqlQueryModel* table_model = new QSqlQueryModel;
    if (ui->radioButton_select->isChecked()) {
-      if (this->db->query.exec(ui->lineEdit_query->toPlainText())) {
-         qInfo() << "Запрос SELECT выполнен успешно!";
-         table_model->setQuery(this->db->query);
-         table_form* table_window = new table_form(table_model); // создаём окно с таблицей
+      QString string_query = ui->lineEdit_query->toPlainText();
+      auto start_exec = std::chrono::high_resolution_clock::now(); // время начала выполнения запроса.
+      if (this->db->query.exec(string_query)) {
+         QSqlQuery result = this->db->query; // результат SQL-запроса
+         auto finish_exec = std::chrono::high_resolution_clock::now(); // время окончания выполнения запроса.
+         short int time_in_msec = std::chrono::duration_cast<std::chrono::milliseconds>(finish_exec - start_exec).count(); // время выполнения SQL-запроса
+         table_model->setQuery(result); // заполняем модель значениями из SQL-запроса.
+         QMap<QString, QString> type_field; // map для хранения типов атрибутов
+         for (int i = 0; i < result.record().count(); i++) {
+            QString field_name = result.record().fieldName(i);
+            this->db->query.exec(QString("SELECT data_type FROM information_schema.columns WHERE table_name = '%1' AND column_name = '%2'").arg(get_table_name(string_query)).arg(field_name));
+            while (this->db->query.next()) {
+               type_field[field_name] = this->db->query.value(0).toString(); // вытаскиваем тип из результата запроса
+            }
+         }
+         qInfo() << type_field;
+         table_form* table_window = new table_form(table_model, type_field, time_in_msec); // создаём окно с таблицей
          table_window->show(); // показываем окно на экране.
-         qInfo() << "Количество колонок в модели: " << table_model->columnCount();
       }
       else {
          notification::create_instance("Ошибка запроса", this->db->query.lastError().text()); // выводим уведомление об ошибке.

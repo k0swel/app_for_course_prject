@@ -4,4 +4,4 @@ build/*
 Makefile
 application.pro.user
 .qmake.stash
-
+.qtc_clangd

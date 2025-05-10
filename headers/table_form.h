@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QSqlQueryModel>
 
+
 namespace Ui {
 class table_form;
 }
@@ -14,20 +15,18 @@ class table_form : public QWidget
    Q_OBJECT
 
 public:
-   explicit table_form(QSqlQueryModel* table_model, QWidget *parent = nullptr);
+   explicit table_form(QSqlQueryModel* table_model, QMap<QString, QString> type_fields, short int time_msec, QWidget *parent = nullptr);
    ~table_form();
 
-private slots:
-   void on_toolButton_close_clicked();
-
-   void on_toolButton_hide_clicked();
-
 private:
+   // ПЕРЕМЕННЫЕ
    Ui::table_form *ui;
-   // ПЕРЕОПРЕДЕЛЕНИЕ СОБЫТИЙ
-   QPoint last_mouse_position;
-   void mousePressEvent(QMouseEvent *event); // переопределяем событие зажатия клавиши мышки на экране
-   void mouseMoveEvent(QMouseEvent* event); // отслеживаем движение мыши с зажатой клавишей
+   short int time_in_msec; // время выполнения SQL-запроса в мс.
+   QMap<QString, QString> type_fields; // хэш-таблица, где хранятся имена атрибутов и соответствующие им значения типов данных.
+
+   // ФУНКЦИИ
+   void set_label_info(); // устанавливаем текст-статистику запроса.
+   void change_header_data(); // изменяем названия заголовок таблицы.
 };
 
 #endif // TABLE_FORM_H

@@ -37,14 +37,14 @@ private:
    static window_query* instance;
    window_query(const window_query&) = delete; // удаляем конструктор копирования
    window_query& operator=(const window_query&) = delete; // удаляем оператор присваивания
-   database* db;
-   Ui::window_query *ui;
-   // ДЛЯ ПЕРЕМЕЩЕНИЯ ОКНА
-   QPointF m_dragPosition;
+   database* db; // объект базы данных
+   Ui::window_query *ui; // объект виджета окна
+   QPointF m_dragPosition; // сохранение координаты мыши при нажатии на экран
    void mousePressEvent(QMouseEvent *event) override; // обрабатываем событие нажатия кнопки мыши
    void mouseMoveEvent(QMouseEvent* event) override; // обрабатываем событие перемещения мыши
-   // ОБРАБАТЫВАЕМ СОБЫТИЕ ЗАКРЫТИЯ ОКНА
    void closeEvent(QCloseEvent* event) override; // обрабатываем событие, когда пользователь хочет закрыть окно
+
+   QString get_table_name(QString& query); // имя таблицы SQL
 };
 
 #endif // WINDOW_QUERY_H
