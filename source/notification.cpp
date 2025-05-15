@@ -19,7 +19,7 @@ notification::notification(QString title, QString text, QWidget *parent) :
    text(text)
 {
    ui->setupUi(this);
-   this->setWindowFlags(Qt::FramelessWindowHint);
+   this->setWindowFlags(Qt::FramelessWindowHint); // убираем заголовок и рамки
    this->setWindowTitle(title); // устанавливаем заголовок окна
    this->move(10,10); // передвигаем окно в начало рабочего стола.
    ui->label_title->setText(title); // устанавливаем заголовок.
@@ -56,7 +56,7 @@ void notification::close_window()
 {
    qreal start_opacity = 1;
    while (start_opacity > 0) {
-      start_opacity-= 0.0001;
+      start_opacity-= 0.001;
       this->setWindowOpacity(start_opacity);
    }
    this->close(); // закрываем окно
@@ -73,7 +73,7 @@ void notification::mousePressEvent(QMouseEvent *event)
 void notification::mouseMoveEvent(QMouseEvent *event)
 {
    if (event->buttons() & Qt::LeftButton) {
-      this->move(std::move(event->globalPosition().toPoint() - last_press_position)); // передвижаем окно
+      this->move(event->globalPosition().toPoint() - last_press_position); // передвигаем окно
    }
    event->accept(); // продолжаем событие
 }

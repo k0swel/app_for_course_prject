@@ -179,6 +179,16 @@ QPlainTextEdit#lineEdit_query:hover {
        <height>20</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QRadioButton#radioButton_select::indicator {
+	background-color: grey;
+	border-radius: 5%;
+}
+
+QRadioButton#radioButton_select::indicator:checked {
+	border: 3px solid green;
+}</string>
+     </property>
      <property name="text">
       <string>Запрос данных</string>
      </property>
@@ -197,6 +207,16 @@ QPlainTextEdit#lineEdit_query:hover {
        <width>181</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QRadioButton#radioButton_other::indicator {
+	background-color: grey;
+	border-radius: 5%;
+}
+
+QRadioButton#radioButton_other::indicator:checked {
+	border: 3px solid green;
+}</string>
      </property>
      <property name="text">
       <string>Манипулирование данными</string>

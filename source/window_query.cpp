@@ -34,6 +34,7 @@ window_query::window_query(database* db, QWidget *parent) :
    ui(new Ui::window_query)
 {
    ui->setupUi(this);
+   this->setWindowTitle("Запрос к базе данных"); // устанавливаем заголовок окна.
    this->db = db; // присваиваем объект базы данных
    this->setWindowFlag(Qt::WindowType::FramelessWindowHint); // прячем рамку окна и верхнюю шапку
    this->setAttribute(Qt::WA_DeleteOnClose); // уничтожаем объект при его закрытии
@@ -68,17 +69,10 @@ QString window_query::get_table_name(QString& query)
    if (query.contains("FROM", Qt::CaseInsensitive)) {
       QString query = ui->lineEdit_query->toPlainText();
       QStringList words = query.split(' ', Qt::SkipEmptyParts);
-      if (query.split(' ').contains("FROM", Qt::CaseInsensitive)) {
-         for (int i = 0; i < words.count(); i++) {
-            if (words.at(i).toLower() == QString("from")) {
-               table_name = words[i+1];
-               if (table_name[table_name.size() - 1] == ';') {
-                  table_name.slice(0, table_name.size() - 1);
-               }
-               break;
-            }
-         }
-      }
+      short int index_from = words.indexOf("FROM",0,Qt::CaseInsensitive); // ищем индекс первого вхождения FROM
+      table_name = words[index_from+1]; // получаем имя таблицы
+      table_name.remove(';'); // удаляем символ ;
+      table_name.remove('"'); // удаляем символ "
    }
    return table_name; // возвращаем имя таблицы
 }
@@ -93,7 +87,7 @@ void window_query::on_toolButton_close_clicked()
 void window_query::on_toolButton_hide_clicked()
 {
    double start_opacity = 1; // начальный коэф. прозрачности
-   for (int i = 0; i < 10000; i++) {
+   while (start_opacity > 0) {
       start_opacity -= 0.0005; // постепенно уменьшаем коэф. прозрачности
       this->setWindowOpacity(start_opacity);
    }
@@ -103,32 +97,33 @@ void window_query::on_toolButton_hide_clicked()
 
 void window_query::on_pushButton_send_query_clicked() // нажата кнопка отправки запроса
 {
-   QSqlQueryModel* table_model = new QSqlQueryModel;
+   QSqlQueryModel* table_model = new QSqlQueryModel(this);
    if (ui->radioButton_select->isChecked()) {
       QString string_query = ui->lineEdit_query->toPlainText();
-      auto start_exec = std::chrono::high_resolution_clock::now(); // время начала выполнения запроса.
       if (this->db->query.exec(string_query)) {
-         QSqlQuery result = this->db->query; // результат SQL-запроса
-         auto finish_exec = std::chrono::high_resolution_clock::now(); // время окончания выполнения запроса.
-         short int time_in_msec = std::chrono::duration_cast<std::chrono::milliseconds>(finish_exec - start_exec).count(); // время выполнения SQL-запроса
+         QSqlQuery result(this->db->query); // результат SQL-запроса
          table_model->setQuery(result); // заполняем модель значениями из SQL-запроса.
          QMap<QString, QString> type_field; // map для хранения типов атрибутов
-         for (int i = 0; i < result.record().count(); i++) {
-            QString field_name = result.record().fieldName(i);
-            this->db->query.exec(QString("SELECT data_type FROM information_schema.columns WHERE table_name = '%1' AND column_name = '%2'").arg(get_table_name(string_query)).arg(field_name));
-            while (this->db->query.next()) {
-               type_field[field_name] = this->db->query.value(0).toString(); // вытаскиваем тип из результата запроса
+         QString table_name = get_table_name(string_query); // получаем имя таблицы
+         if (!table_name.isNull()) { // если имя таблицы не равно NULL
+            for (int i = 0; i < result.record().count(); i++) {
+               QString field_name = result.record().fieldName(i);
+               this->db->query.exec(QString("SELECT data_type FROM information_schema.columns WHERE table_name = '%1' AND column_name = '%2'").arg(table_name).arg(field_name));
+               while (this->db->query.next()) {
+                  type_field[field_name] = this->db->query.value(0).toString(); // вытаскиваем тип из результата запроса
+               }
             }
+            qInfo() << type_field; // печатаем типы данных каждого атрибута.
          }
-         qInfo() << type_field;
-         table_form* table_window = new table_form(table_model, type_field, time_in_msec); // создаём окно с таблицей
+         table_form* table_window = new table_form(this->db, this, table_name, table_model, type_field); // создаём окно с таблицей
          table_window->show(); // показываем окно на экране.
+         this->hide();
       }
       else {
          notification::create_instance("Ошибка запроса", this->db->query.lastError().text()); // выводим уведомление об ошибке.
       }
    }
-   else if (ui->radioButton_other->isChecked()) {
+   else if (ui->radioButton_other->isChecked()) { // если выбрал радиобаттон на поиск исполняемых запросов.
       if (ui->lineEdit_query->toPlainText().contains("select", Qt::CaseInsensitive))
          notification::create_instance("Ошибка", "Вы ввели запрос на выборку данных с настройкой \"Манипулирование данными\"");
       else {

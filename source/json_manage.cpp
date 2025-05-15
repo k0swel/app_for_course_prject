@@ -29,19 +29,19 @@ bool write_to_json(QString &address, QString &database_name, QString &password, 
 
 void read_from_json(QString& address, QString& database_name, QString& password, int& port, QString& username)
 {
-   std::fstream json_file;
+   std::fstream json_file; // создаём объект чтения json
    json_file.open(FILE_NAME, std::ios_base::in); // открываем json-файл
-   QString json_text;
+   QString json_text; //  QString для хранения JSON
    std::string json_temp_text;
    while (getline(json_file, json_temp_text)) {
       json_text+=json_temp_text;
    }
-   json_file.close();
-   QJsonObject main_obj = QJsonDocument::fromJson(json_text.toUtf8()).object();
-   address = main_obj.take("address").toString();
-   database_name = main_obj.take("database_name").toString();
-   password = main_obj.take("password").toString();
-   port = main_obj.take("port").toInt();
-   username = main_obj.take("username").toString();
+   json_file.close(); // закрываем файл.
+   QJsonObject main_obj = QJsonDocument::fromJson(json_text.toUtf8()).object(); // форматируем QString в JSON
+   address = main_obj.take("address").toString(); // вытаскиваем из JSON адрес
+   database_name = main_obj.take("database_name").toString(); // вытаскиваем из JSON имя базы данных
+   password = main_obj.take("password").toString(); // вытаскиваем из JSON пароль
+   port = main_obj.take("port").toInt(); // вытаскиваем из JSON порт
+   username = main_obj.take("username").toString(); // вытаскиваем из JSON юзернейм.
    return;
 }

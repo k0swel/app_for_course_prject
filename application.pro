@@ -14,13 +14,13 @@ TEMPLATE = app
 CONFIG -=debug_and_release
 CONFIG += release
 
+
 DESTDIR = $$PWD/build
 
 OBJECTS_DIR = ./build/obj
 UI_DIR = ./build/ui
 MOC_DIR = ./build/moc
-RCC_DIR = ./build/rcc
-
+RCC_DIR = ./build/rcs
 INCLUDEPATH = $$PWD/headers
 
 SOURCES += \
@@ -50,3 +50,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc

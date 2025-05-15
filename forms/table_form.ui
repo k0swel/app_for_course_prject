@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>468</height>
+    <width>547</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,12 +50,7 @@ QLabel#label_main_text::hover {
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QTableView#tableView_from_database {
-	border: 1px solid red;
-	border-radius: 10px;
-}
-
-QTableView#tableView_from_database::item {
+      <string notr="true">QTableView#tableView_from_database::item {
 	background-color: white;
 }
 
@@ -63,43 +58,101 @@ QTableView::item:selected {
 	background-color: white;
 	color: black;
 }
+</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>33</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="toolTip">
+        <string comment="сделать бекап текущей таблицы" extracomment="сделать бекап текущей таблицы"/>
+       </property>
+       <property name="statusTip">
+        <string comment="сделать бекап текущей таблицы" extracomment="сделать бекап текущей таблицы"/>
+       </property>
+       <property name="whatsThis">
+        <string comment="сделать бекап текущей таблицы" extracomment="сделать бекап текущей таблицы"/>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#pushButton {
+background-color: rgb(0, 255, 0);
+}
 
-QTableView#table_from_database
+QPushButton#pushButton:hover {
+	border: 1px solid rgb(0, 0, 127);
+}
 
-QTableView#tableView_from_database:hover {
-	border: 1px solid rgb(0, 255, 0);
+QToolTip {
+	background-color: white;
+	color: black;
 }</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Policy::Minimum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>30</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_info">
-     <property name="styleSheet">
-      <string notr="true">color: white</string>
-     </property>
-     <property name="text">
-      <string>&lt;статистика запроса&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
+       </property>
+       <property name="text">
+        <string>Сделать бекап</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>66</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_info">
+       <property name="styleSheet">
+        <string notr="true">color: white</string>
+       </property>
+       <property name="text">
+        <string>&lt;статистика запроса&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

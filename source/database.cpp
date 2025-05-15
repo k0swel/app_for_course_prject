@@ -25,12 +25,24 @@ bool database::connect_to_database(QString& ip_address, QString& database_name, 
       return false;
    }
    qDebug() << QString("Подключение к БД установлено успешно!"); // если мы успешно подключились к БД
+   this->database_data = fill_json(ip_address, database_name, port, username, password); // заполняем json-объект
    return true;
 }
 
 QSqlDatabase& database::get_db()
 {
    return this->db; // возвращаю объект базы данных
+}
+
+QJsonObject database::fill_json(QString& ip_address, QString& database_name, int port, QString& username, QString& password) {
+   QJsonObject return_value;
+   return_value["ip_address"] = ip_address;
+   return_value["port"] = port;
+   return_value["database_name"] = database_name;
+   return_value["port"] = port;
+   return_value["username"] = username;
+   return_value["password"] = password;
+   return return_value;
 }
 
 void check_connect_state(QSqlDatabase *db)

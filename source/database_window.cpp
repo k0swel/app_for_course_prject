@@ -16,7 +16,7 @@ database_window::database_window(QWidget *parent) :
    this->setWindowFlag(Qt::WindowType::FramelessWindowHint);
    connect(this, &database_window::destroyed, this, &QObject::deleteLater); // при закрытии окна уничтожаем его объект.
    this->dms = new database; // инициализируем объект БД
-   fill_input_fields();
+   fill_input_fields(); // заполняем поля ввода из json файла.
    this->show();
 }
 
