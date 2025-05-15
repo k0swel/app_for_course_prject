@@ -1,5 +1,6 @@
 build/*
 !*.dll
+!*.ico
 .qt
 Makefile
 application.pro.user

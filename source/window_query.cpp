@@ -113,7 +113,6 @@ void window_query::on_pushButton_send_query_clicked() // нажата кнопк
                   type_field[field_name] = this->db->query.value(0).toString(); // вытаскиваем тип из результата запроса
                }
             }
-            qInfo() << type_field; // печатаем типы данных каждого атрибута.
          }
          table_form* table_window = new table_form(this->db, this, table_name, table_model, type_field); // создаём окно с таблицей
          table_window->show(); // показываем окно на экране.
