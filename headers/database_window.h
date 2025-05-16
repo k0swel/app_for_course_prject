@@ -23,9 +23,6 @@ public:
 
 
 private slots:
-   void on_toolButton_close_clicked(); // кнопка закрытия окна
-
-   void on_toolButton_hide_clicked(); // кнопка скрытия окна
 
    void on_pushButton_connect_clicked(); // кнопка подключения к БД
 

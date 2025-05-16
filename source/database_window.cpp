@@ -13,7 +13,11 @@ database_window::database_window(QWidget *parent) :
    ui(new Ui::database_window)
 {
    ui->setupUi(this);
-   this->setWindowFlag(Qt::WindowType::FramelessWindowHint);
+   this->setWindowTitle("Подключение к базе данных"); // заголовок
+   this->setWindowFlags(    Qt::Window |
+                           Qt::WindowTitleHint |
+                           Qt::WindowCloseButtonHint |
+                           Qt::WindowMinimizeButtonHint ); // прячем кнопку сворачивания
    connect(this, &database_window::destroyed, this, &QObject::deleteLater); // при закрытии окна уничтожаем его объект.
    this->dms = new database; // инициализируем объект БД
    fill_input_fields(); // заполняем поля ввода из json файла.
@@ -48,24 +52,6 @@ void database_window::fill_input_fields()
       ui->lineEdit_port->setText(QString::number(port));
       ui->lineEdit_password->setText(password);
    }
-}
-
-
-void database_window::on_toolButton_close_clicked()
-{
-   this->close(); // запускаем обработку события закрытия текущего окна.
-}
-
-
-void database_window::on_toolButton_hide_clicked()
-{
-   double start_opacity = 1;
-   for (int i = 0; i < 10000; i++) {
-      start_opacity -= 0.0005;
-      this->setWindowOpacity(start_opacity);
-   }
-   this->showMinimized();
-   this->setWindowOpacity(1);
 }
 
 database_window::~database_window()

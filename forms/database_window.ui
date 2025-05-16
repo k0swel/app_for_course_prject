@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>794</width>
-    <height>454</height>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,64 +20,11 @@ color: black;
 }
 </string>
   </property>
-  <widget class="QWidget" name="widget_header" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>45</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QWidget#widget_header {
-	background-color: rgb(115, 115, 115)
-}</string>
-   </property>
-   <widget class="QToolButton" name="toolButton_hide">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>12</y>
-      <width>23</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="QIcon::ThemeIcon::ListRemove"/>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton_close">
-    <property name="geometry">
-     <rect>
-      <x>740</x>
-      <y>12</y>
-      <width>23</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>X</string>
-    </property>
-    <property name="icon">
-     <iconset theme="application-exit"/>
-    </property>
-   </widget>
-  </widget>
   <widget class="QLabel" name="label_main_text">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
+     <y>30</y>
      <width>769</width>
      <height>69</height>
     </rect>
@@ -106,7 +53,7 @@ QLabel#label_main_text::hover {
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>140</y>
+     <y>120</y>
      <width>671</width>
      <height>261</height>
     </rect>

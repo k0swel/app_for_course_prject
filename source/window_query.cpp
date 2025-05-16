@@ -35,8 +35,11 @@ window_query::window_query(database* db, QWidget *parent) :
 {
    ui->setupUi(this);
    this->setWindowTitle("Запрос к базе данных"); // устанавливаем заголовок окна.
+   this->setWindowFlags(    Qt::Window |
+                           Qt::WindowTitleHint |
+                           Qt::WindowCloseButtonHint |
+                           Qt::WindowMinimizeButtonHint ); // прячем кнопку сворачивания
    this->db = db; // присваиваем объект базы данных
-   this->setWindowFlag(Qt::WindowType::FramelessWindowHint); // прячем рамку окна и верхнюю шапку
    this->setAttribute(Qt::WA_DeleteOnClose); // уничтожаем объект при его закрытии
    qDebug() << QString("Создан объект класса window_query( %1 )").arg((qintptr)this); // выводим удаленный объект класса
 }
