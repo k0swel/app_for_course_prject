@@ -81,15 +81,16 @@ void table_form::on_pushButton_clicked() // если хотим сделать �
        "-w"
    });
    if (!terminal->waitForStarted()) {
-       qCritical() << "Ошибка запуска pg_dump:" << terminal->errorString();
+       qDebug() << "Ошибка запуска pg_dump:" << terminal->errorString();
        notification::create_instance("Ошибка", terminal->errorString()); // вызываем всплывающее уведомление с ошибкой.
        return;
    }
 
    if (terminal->exitCode() != 0) {
-       qCritical() << "Ошибка pg_dump:" << terminal->readAllStandardError();
+       qDebug() << "Ошибка pg_dump:" << terminal->readAllStandardError();
    } else {
        qInfo() << "Бекап успешно создан:" << path_to_save;
+       notification::create_instance("Успешное создание бэкапа", QString("Бэкап доступен по следующему пути: %1.").arg(path_to_save));
    }
 
 }
